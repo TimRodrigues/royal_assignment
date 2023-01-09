@@ -1,6 +1,4 @@
-# Getting Started with Create React App
-
-Royal HaskoningDHV Frontend assignment
+# Royal HaskoningDHV Frontend assignment
 
 ## View the project live
 
