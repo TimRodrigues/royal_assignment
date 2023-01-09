@@ -12,7 +12,7 @@ function App() {
   const [currentLocationError, setCurrentLocationError] = useState<GeolocationPositionError>()
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
+    navigator?.geolocation?.getCurrentPosition(
       (position) => {
         setLocation({
           lat: position.coords.latitude,
@@ -25,7 +25,7 @@ function App() {
     )
   }, [])
 
-  const { weather, isFetching, refetchWeather, forecast, weatherError, forecastError } = WeatherData(location, unit)
+  const { weather, forecast } = WeatherData(location, unit)
 
   return (
     <div className="App">
@@ -33,16 +33,18 @@ function App() {
         {currentLocationError ? (
           <p>{currentLocationError.message}</p>
         ) : (
-          <Weather
-            weather={weather}
-            forecast={forecast?.list}
-            refetchWeather={refetchWeather}
-            isFetching={isFetching}
-            unit={unit}
-            setUnit={setUnit}
-            weatherError={weatherError}
-            forecastError={forecastError}
-          />
+          <>
+            <Weather
+              weather={weather.data}
+              forecast={forecast.data?.list}
+              refetchWeather={weather.refetch}
+              isFetching={weather.isFetching}
+              unit={unit}
+              setUnit={setUnit}
+              weatherError={weather.isError}
+              forecastError={forecast.isError}
+            />
+          </>
         )}
       </div>
     </div>

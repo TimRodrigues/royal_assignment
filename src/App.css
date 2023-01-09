@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   width: 80rem;
-  margin-top: 2rem;
+  margin: 2rem .5rem 0 .5rem;
 }
 
 .weather-content-wrapper {
@@ -22,6 +22,7 @@
 .weather-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .weather-header-left {
@@ -236,4 +237,58 @@
   border: none;
   border-radius: .5rem;
   font-weight: bold;
+}
+
+@media screen and (max-width: 1300px){
+  .weather-content-wrapper {
+    flex-direction: column;
+  }
+  .weather-forecast {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 710px){
+  .weather-day-forecast-hour {
+    width: 4.5rem;
+  }
+
+  .weather-day-forecast-hour img {
+    width: 4rem;
+  }
+
+  .weather-day-forecast-content {
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .weather-air-conditions-item-col-right {
+    margin-left: 4rem;
+  }
+
+  .weather-header img {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .weather-header-location {
+    font-size: 1.8rem;
+  }
+
+  .weather-header-temperature {
+    font-size: 3rem;
+  }
+
+  .weather-header-left {
+    padding: 0;
+  }
+
+  .weather-air-conditions-item div {
+    font-size: 1.6rem;
+  }
+
+  .weather-day-forecast, .weather-air-conditions, .weather-forecast {
+    padding: .75rem;
+  }
+  
 }

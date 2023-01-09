@@ -1,5 +1,5 @@
 import React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import getCurrentDay from "./getCurrentDay"
 import WeatherAirConditions from "./WeatherAirConditions"
 import WeatherDayForecast from "./WeatherDayForecast"
@@ -17,12 +17,16 @@ interface WeatherProps {
   unit: Unit
   setUnit: (unit: Unit) => void
   weatherError: any
-  forecastError: Error | unknown
+  forecastError: any
 }
 
 const Weather = (props: WeatherProps) => {
   const { weather, forecast, refetchWeather, isFetching, unit, setUnit, weatherError, forecastError } = props
-  const [selectedDay, setSelectedDay] = useState(getCurrentDay)
+  const [selectedDay, setSelectedDay] = useState<string>("")
+
+  useEffect(() => {
+    if (forecast && !selectedDay) setSelectedDay(getCurrentDay(forecast[0].dt))
+  }, [forecast, selectedDay])
 
   const forecastByDay = forecast?.reduce((acc: ForecastByDay, item: Forecast) => {
     const date = new Date(item.dt * 1000)
@@ -65,7 +69,7 @@ const Weather = (props: WeatherProps) => {
   if (weatherError || forecastError) {
     return (
       <>
-        <p>Something went wrong {weatherError?.message}</p>
+        <p>Something went wrong {weatherError ? weatherError?.message : forecastError?.message}</p>
         <button className="weather-content-actions-refresh" onClick={refetchWeather}>
           {isFetching ? <ClipLoader size={20} /> : "Refetch"}
         </button>
@@ -108,7 +112,7 @@ const Weather = (props: WeatherProps) => {
             />
           </div>
         ) : (
-          <ClipLoader size={150} />
+          <ClipLoader size={150} data-testid="loader" />
         )}
       </div>
     </div>
